@@ -26,7 +26,7 @@ Una API REST completa para gestionar un sistema de restaurante, construida con N
 
 1. **Clona el repositorio**
    ```bash
-   git clone <url-del-repositorio>
+   git clone https://github.com/n-williamsons/bit-backend.git
    cd bit-backend
    ```
 
@@ -196,9 +196,10 @@ Content-Type: application/json
 }
 ```
 
-## 🔒 Características Iniciales de Seguridad
+## 🔒 Características de Seguridad
 
 - **Protección Admin**: Los usuarios admin no pueden ser actualizados o eliminados
+- **Validaciones**: Validaciones robustas en todos los endpoints
 - **Manejo de Errores**: Respuestas de error consistentes y descriptivas
 
 ## 🛠️ Scripts Disponibles
@@ -230,7 +231,14 @@ npm start
 | `404` | Recurso no encontrado |
 | `500` | Error interno del servidor |
 
+## 📋 Próximas Funcionalidades
 
+- [ ] Autenticación JWT
+- [ ] Middleware de autorización
+- [ ] Paginación en endpoints GET
+- [ ] Filtros y búsqueda
+- [ ] Documentación con Swagger
+- [ ] Tests unitarios
 
 ## 👨‍💻 Autor
 
@@ -248,4 +256,6 @@ Junior Web Developer
 - [GitHub](https://github.com/n-williamsons)
 - [Email](mailto:silvanicolasandres@gmail.com)
 
----# bit-backend
+---
+
+⭐ **¡Si te gusta el proyecto, no olvides darle una estrella!** ⭐
