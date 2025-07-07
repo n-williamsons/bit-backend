@@ -109,92 +109,6 @@ http://localhost:3000
 | `GET` | `/orders/:id` | Obtener una orden específica |
 | `PUT` | `/orders/:id` | Actualizar una orden |
 
-## 📝 Ejemplos de Uso
-
-### Crear un Usuario
-```bash
-POST /users
-Content-Type: application/json
-
-{
-  "name": "Juan Pérez",
-  "email": "juan@email.com",
-  "phone": "+1234567890",
-  "address": "123 Main St"
-}
-```
-
-### Crear un Elemento del Menú
-```bash
-POST /menu
-Content-Type: application/json
-
-{
-  "name": "Pizza Margarita",
-  "description": "Pizza con tomate, mozzarella y albahaca",
-  "price": 12.99,
-  "image": "https://example.com/pizza.jpg"
-}
-```
-
-### Crear una Orden
-```bash
-POST /orders
-Content-Type: application/json
-
-{
-  "user": "675a1234567890abcdef1234",
-  "items": [
-    {
-      "menuItem": "675a1234567890abcdef5678",
-      "quantity": 2
-    }
-  ],
-  "totalAmount": 25.98,
-  "status": "pending"
-}
-```
-
-## 🗃️ Modelos de Datos
-
-### Usuario
-```javascript
-{
-  name: String (required),
-  email: String (required, unique),
-  phone: String (required),
-  address: String (required),
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
-### Menú
-```javascript
-{
-  name: String (required),
-  description: String (required),
-  price: Number (required, min: 0),
-  image: String (required),
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
-### Orden
-```javascript
-{
-  user: ObjectId (ref: User, required),
-  items: [{
-    menuItem: ObjectId (ref: Menu, required),
-    quantity: Number (required, min: 1)
-  }],
-  totalAmount: Number (required, min: 0),
-  status: String (enum: ["pending", "completed", "cancelled"], default: "pending"),
-  createdAt: Date,
-  updatedAt: Date
-}
-```
 
 ## 🔒 Características de Seguridad
 
@@ -231,14 +145,6 @@ npm start
 | `404` | Recurso no encontrado |
 | `500` | Error interno del servidor |
 
-## 📋 Próximas Funcionalidades
-
-- [ ] Autenticación JWT
-- [ ] Middleware de autorización
-- [ ] Paginación en endpoints GET
-- [ ] Filtros y búsqueda
-- [ ] Documentación con Swagger
-- [ ] Tests unitarios
 
 ## 👨‍💻 Autor
 
@@ -258,4 +164,3 @@ Junior Web Developer
 
 ---
 
-⭐ **¡Si te gusta el proyecto, no olvides darle una estrella!** ⭐
