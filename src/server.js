@@ -5,6 +5,7 @@ import morgan from "morgan";
 import menuRouter from "./routers/menu.js";
 import orderRouter from "./routers/order.js";
 import userRouter from "./routers/user.js";
+import cors from "cors";
 
 
 
@@ -14,6 +15,7 @@ const port = process.env.PORT;
 const host = process.env.HOST;
 
 // Middlewares
+server.use(cors());
 server.use(morgan("dev"));
 server.use(express.json());
 server.use("/menu", menuRouter);

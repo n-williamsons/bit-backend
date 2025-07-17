@@ -1,16 +1,38 @@
+import bcrypt from "bcryptjs";
 import UserModel from "../models/user.js";
+import { generateToken } from "../utils/token.js";
 
 const UserController = {
 	create: async (req, res) => {
 		try {
-			const id = req.params.id;
-			const { name, email, phone, address } = req.body;
+			const { name, email, phone, password } = req.body;
+			
+			if(!name || !email || !phone || !password) {
+				return res.status(400).json({
+					allOk: false,
+					message: "All fields are required",
+					data: null,
+				});
+			}
+			
+			const encryptedPassword = await bcrypt.hash(password, 10);
+
+			const existingUser = await UserModel.findOne({ email });
+			if (existingUser) {
+				return res.status(400).json({
+					allOk: false,
+					message: "User already exists, please use a different email",
+					data: null,
+				});
+			}
+
 			const newUser = new UserModel({
 				name,
 				email,
 				phone,
-				address,
+				password: encryptedPassword,
 			});
+
 			const savedUser = await newUser.save();
 			res.status(201).json({
 				allOk: true,
@@ -149,7 +171,79 @@ const UserController = {
                 data: error.message,
             });
         }
-    }
+    },
+
+	login: async (req, res) => {
+		try {
+			const { email, password } = req.body;
+
+			if (!email || !password) {
+				return res.status(400).json({
+					allOk: false,
+					message: "Email and password are required",
+					data: null,
+				});
+			}
+
+
+		const userFound = await UserModel.findOne({ email });
+
+		if (!userFound) {
+			return res.status(404).json({
+				allOk: false,
+				message: "User not found",
+				data: null,
+			});
+		}else {
+				const isPasswordValid = await bcrypt.compare(
+					password, 
+					userFound.password
+				);
+
+				if (isPasswordValid){
+					const token = await generateToken({id: userFound._id,name: userFound.name, email: userFound.email});
+					console.log(token);
+					if (token) {
+						res.status(200).json({
+							allOk: true,
+							message: "User logged in successfully",
+							data: token,
+						});
+					} else {
+						res.status(500).json({
+							allOk: false,
+							message: "Error generating token",
+							data: null,
+						});
+					}
+				} else {
+					res.status(401).json({
+						allOk: false,
+						message: "Unauthorized",
+						data: null,
+					});
+				}
+			}
+			
+		} catch (error) {
+			res.status(500).json({
+				allOk: false,
+				message: "Error during login",
+				data: error.message,
+			});
+		}
+	},
+
+	logout: (req, res) => {
+		res.status(200).json({
+			allOk: true,
+			message: "User logged out successfully",
+			data: null,
+		});
+	},
+
+
+
 
 };
 
